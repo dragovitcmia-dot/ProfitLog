@@ -1,0 +1,16 @@
+{
+  "name": "profitlog",
+  "version": "1.0.0",
+  "description": "Offline-first profit log PWA for TND sales. No backend, no build step.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "start": "node scripts/serve.mjs",
+    "stamp": "node scripts/stamp.mjs",
+    "check": "node scripts/stamp.mjs --check && node --test \"test/*.test.js\""
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

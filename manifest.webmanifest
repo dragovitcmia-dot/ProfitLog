@@ -1,0 +1,28 @@
+{
+  "id": "./",
+  "name": "ProfitLog",
+  "short_name": "ProfitLog",
+  "description": "A tiny offline profit log for your sales, in TND. Everything stays on your phone.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f3ee",
+  "theme_color": "#f4f3ee",
+  "lang": "en",
+  "categories": ["finance", "business", "productivity"],
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Log sale",
+      "short_name": "Log sale",
+      "description": "Open the Log sale sheet",
+      "url": "./#/new",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

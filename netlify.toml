@@ -1,0 +1,21 @@
+# Netlify: connect the repo (or drag the project folder onto app.netlify.com/drop).
+[build]
+  command = "node scripts/stamp.mjs && mkdir -p _site && cp -r index.html manifest.webmanifest sw.js css js icons _site/"
+  publish = "_site"
+
+# The service worker must never be cached by the browser, or updates won't be noticed.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"

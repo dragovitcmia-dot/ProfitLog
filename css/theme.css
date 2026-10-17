@@ -1,0 +1,133 @@
+/* Design tokens. Light is the default; dark follows the system unless the
+   user picks a theme in Settings (data-theme="light" | "dark" on <html>). */
+:root {
+  --font: ui-rounded, "SF Pro Rounded", "SF Pro Text", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --bg: #f4f3ee;
+  --surface: #ffffff;
+  --surface-2: #eceee8;
+  --surface-3: #e3e6df;
+  --text: #17201c;
+  --text-2: #55635c;
+  --text-3: #86928c;
+  --line: rgba(23, 32, 28, 0.08);
+  --line-strong: rgba(23, 32, 28, 0.16);
+
+  --brand: #0b8a68;
+  --brand-strong: #087256;
+  --brand-soft: #dcf2ea;
+  --on-brand: #ffffff;
+
+  --pos: #0b8a68;
+  --pos-soft: #dcf2ea;
+  --neg: #d23f45;
+  --neg-soft: #fbe3e4;
+  --warn: #9a6200;
+  --warn-soft: #fcefd0;
+  --info: #2d5fd4;
+  --info-soft: #e3ebfc;
+
+  --hero-from: #08684f;
+  --hero-to: #0e9b75;
+  --hero-glow: rgba(255, 255, 255, 0.16);
+
+  --toast-bg: #17201c;
+  --toast-text: #f1f5f2;
+  --toast-action: #5fe0b8;
+
+  --backdrop: rgba(14, 22, 18, 0.46);
+  --shadow-sm: 0 1px 2px rgba(23, 32, 28, 0.08);
+  --shadow-card: 0 1px 2px rgba(23, 32, 28, 0.05), 0 10px 28px -16px rgba(23, 32, 28, 0.22);
+  --shadow-pop: 0 18px 44px -12px rgba(11, 138, 104, 0.55);
+  --focus: #2d5fd4;
+
+  --r-lg: 22px;
+  --r-md: 16px;
+  --r-sm: 12px;
+  --tab-h: 64px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b110f;
+    --surface: #151d1a;
+    --surface-2: #1d2824;
+    --surface-3: #25322d;
+    --text: #e9f0ec;
+    --text-2: #a3b1aa;
+    --text-3: #71827a;
+    --line: rgba(255, 255, 255, 0.07);
+    --line-strong: rgba(255, 255, 255, 0.15);
+
+    --brand: #35d6a4;
+    --brand-strong: #5fe3bb;
+    --brand-soft: rgba(53, 214, 164, 0.15);
+    --on-brand: #04261b;
+
+    --pos: #43dcad;
+    --pos-soft: rgba(67, 220, 173, 0.15);
+    --neg: #ff7b80;
+    --neg-soft: rgba(255, 123, 128, 0.15);
+    --warn: #f2bf5a;
+    --warn-soft: rgba(242, 191, 90, 0.14);
+    --info: #8eb0ff;
+    --info-soft: rgba(142, 176, 255, 0.14);
+
+    --hero-from: #0b4a3a;
+    --hero-to: #0f6f55;
+    --hero-glow: rgba(95, 227, 187, 0.16);
+
+    --toast-bg: #e9f0ec;
+    --toast-text: #121a17;
+    --toast-action: #087256;
+
+    --backdrop: rgba(0, 0, 0, 0.6);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 12px 30px -18px rgba(0, 0, 0, 0.8);
+    --shadow-pop: 0 18px 44px -12px rgba(53, 214, 164, 0.4);
+    --focus: #8eb0ff;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b110f;
+  --surface: #151d1a;
+  --surface-2: #1d2824;
+  --surface-3: #25322d;
+  --text: #e9f0ec;
+  --text-2: #a3b1aa;
+  --text-3: #71827a;
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.15);
+
+  --brand: #35d6a4;
+  --brand-strong: #5fe3bb;
+  --brand-soft: rgba(53, 214, 164, 0.15);
+  --on-brand: #04261b;
+
+  --pos: #43dcad;
+  --pos-soft: rgba(67, 220, 173, 0.15);
+  --neg: #ff7b80;
+  --neg-soft: rgba(255, 123, 128, 0.15);
+  --warn: #f2bf5a;
+  --warn-soft: rgba(242, 191, 90, 0.14);
+  --info: #8eb0ff;
+  --info-soft: rgba(142, 176, 255, 0.14);
+
+  --hero-from: #0b4a3a;
+  --hero-to: #0f6f55;
+  --hero-glow: rgba(95, 227, 187, 0.16);
+
+  --toast-bg: #e9f0ec;
+  --toast-text: #121a17;
+  --toast-action: #087256;
+
+  --backdrop: rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 12px 30px -18px rgba(0, 0, 0, 0.8);
+  --shadow-pop: 0 18px 44px -12px rgba(53, 214, 164, 0.4);
+  --focus: #8eb0ff;
+  color-scheme: dark;
+}
