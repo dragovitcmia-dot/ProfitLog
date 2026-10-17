@@ -2,6 +2,7 @@
 
 import { wall, wallToTs, isValidKey, keyOf } from './dates.js';
 import { parseMoney, toCsvAmount, MAX_ABS_MILLIMES } from './money.js';
+import { cleanCalc } from './calc.js';
 
 export const APP_ID = 'profitlog';
 export const SCHEMA_VERSION = 1;
@@ -66,6 +67,7 @@ export function buildBackup({ sales, settings }, now = Date.now()) {
       tags: settings.tags,
       weekStart: settings.weekStart,
       theme: settings.theme,
+      calc: settings.calc,
     },
     sales: sales.map((s) => {
       const o = { id: s.id, ts: s.ts, profit: s.profit, tag: s.tag ?? null, note: s.note ?? '', createdAt: s.createdAt, updatedAt: s.updatedAt };
@@ -121,6 +123,7 @@ function cleanSettings(s) {
   }
   if (Number.isInteger(s.weekStart) && s.weekStart >= 0 && s.weekStart <= 6) out.weekStart = s.weekStart;
   if (['auto', 'light', 'dark'].includes(s.theme)) out.theme = s.theme;
+  if (s.calc && typeof s.calc === 'object') out.calc = cleanCalc(s.calc);
   return out;
 }
 

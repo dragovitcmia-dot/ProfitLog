@@ -2,12 +2,32 @@
 
 A tiny, offline-first **profit log** for people who sell digital products (gift cards, in-game currency) in **Tunisian dinars (TND)**. You work out the profit of each sale yourself; the app just records it, groups it, and shows you where you stand.
 
+- **Profit calculator built in**: the **Calc** tab works out profit and margin on a gift card you resell (USDT → EUR card → TND), then logs the sale in one tap.
 - **Installable PWA**: "Add to Home Screen" on Android or iPhone, runs full-screen like an app.
-- **100 % offline, no backend, no account.** Everything is stored on your device (IndexedDB, with a localStorage → memory fallback).
+- **Offline-first, no backend, no account.** Everything is stored on your device (IndexedDB, with a localStorage → memory fallback). The only network call is the optional live EUR/USD rate in Calc.
 - **No build step, no dependencies.** Plain HTML, CSS and ES modules. Any static host works.
 - Money is stored as **integer millimes** (1 TND = 1000 millimes) and only rounded for display. Dates and times are **Africa/Tunis**.
 
 > Logging a sale takes about 3 seconds: **Log sale → type the profit → Add.**
+> Don't know the profit yet? **Calc → card price + sell price → Log this sale.**
+
+---
+
+## Calc tab (card profit calculator)
+
+```
+usdPer100Credit = creditPrice (USD)  |  creditPrice × eurUsdRate (EUR)
+costUSDT   = cardPrice × usdPer100Credit / 100
+costTND    = costUSDT × usdtPrice
+profitTND  = sellPrice − costTND
+marginOnCost = profit / costTND × 100      marginOnSale = profit / sellPrice × 100
+suggested  = costTND × 1.10 / 1.15 / 1.20
+```
+
+- Results update as you type. `.` and `,` both work as the decimal mark (also `1 234,5`, `1,234.56`, Arabic-Indic digits).
+- **Log this sale** opens the normal Log sale sheet with the profit (rounded to whole millimes) and a note like "18.84 EUR card, sold 80.00 TND" filled in. A loss pre-selects the minus sign.
+- **Rates** (USDT price, credit price, its currency, EUR/USD) are saved on the device and included in JSON backups.
+- The EUR/USD rate is pulled when you first open Calc each session and with **Pull live** (frankfurter.dev, falling back to open.er-api.com). A rate you typed yourself is never overwritten by the automatic pull. Offline, the last saved rate is used.
 
 ---
 
@@ -131,10 +151,12 @@ js/core/                 pure logic, no DOM, fully unit-tested
   stats.js               ALL the statistics: totals, averages, best/worst, grouping, periods, comparison, projection
   dates.js               Africa/Tunis calendar maths, day keys, labels
   money.js               millimes parsing/formatting
+  calc.js                card profit calculator maths + validation
   io.js                  JSON/CSV export, import, validation, merge planning
   demo.js                deterministic demo data
 js/data/db.js            IndexedDB → localStorage → memory adapters
 js/data/store.js         app state + persistence queue
+js/data/rates.js         live EUR/USD rate (the only network call)
 js/ui/, js/views/        DOM helpers, sheets, charts, screens
 test/                    node:test suites
 scripts/                 serve.mjs (dev server), stamp.mjs (SW version), make-icons.mjs (optional)
@@ -143,7 +165,7 @@ icons/                   SVG sources + PNGs (any + maskable)
 
 ### Tests
 
-`npm test` runs ~70 tests with Node's built-in runner covering: totals and exact millime sums, averages, best/worst day, grouping by day/week/month (incl. custom week start and month-boundary weeks), period filtering, previous-period comparison, the projection (floor/ceiling, 14-day warning), time-zone handling, money parsing/formatting, JSON and CSV import/export **round trips**, merge/replace planning, and that the service worker caches every app file.
+`npm test` runs ~85 tests with Node's built-in runner covering: totals and exact millime sums, averages, best/worst day, grouping by day/week/month (incl. custom week start and month-boundary weeks), period filtering, previous-period comparison, the projection (floor/ceiling, 14-day warning), time-zone handling, the calculator maths and live-rate fallback, money parsing/formatting, JSON and CSV import/export **round trips**, merge/replace planning, and that the service worker caches every app file.
 
 ---
 
@@ -153,3 +175,4 @@ icons/                   SVG sources + PNGs (any + maskable)
 - iOS may clear a website's data after weeks of non-use if it isn't installed to the Home Screen; installing it avoids that.
 - The fallback storage modes (localStorage / memory) exist only so the app still opens in locked-down browsers; a warning banner is shown. There is no automatic migration from them to IndexedDB.
 - Charts and the UI are in English; amounts use a `.` decimal point.
+- The Content-Security-Policy in `index.html` allows connections to `api.frankfurter.dev` and `open.er-api.com` only (for the live rate). If you host the app elsewhere, keep those two hosts in `connect-src`.

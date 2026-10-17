@@ -8,12 +8,14 @@ import { onUpdateReady, updateReady, applyUpdate } from './pwa.js';
 import { store } from '../data/store.js';
 import { todayKey } from '../core/dates.js';
 import { renderHome } from '../views/home.js';
+import { renderCalc } from '../views/calc.js';
 import { renderHistory } from '../views/history.js';
 import { renderDashboard } from '../views/dashboard.js';
 import { renderSettings } from '../views/settings.js';
 
 const TABS = [
   { id: 'home', label: 'Home', icon: 'home', render: renderHome },
+  { id: 'calc', label: 'Calc', icon: 'calc', render: renderCalc },
   { id: 'history', label: 'History', icon: 'history', render: renderHistory },
   { id: 'dashboard', label: 'Dashboard', icon: 'chart', render: renderDashboard },
   { id: 'settings', label: 'Settings', icon: 'settings', render: renderSettings },

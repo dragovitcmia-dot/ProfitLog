@@ -24,10 +24,11 @@ export function cleanAmountText(raw) {
  * openSaleForm({ sale })            edit an existing sale
  * openSaleForm({ day: 'YYYY-MM-DD' }) add a sale on a given (past) day
  * openSaleForm({ returnHome: false }) stay on the current screen after adding
+ * openSaleForm({ prefill: { profit, note } }) start a new sale with these values (profit in millimes, e.g. from the calculator)
  */
-export function openSaleForm({ sale = null, day = null, returnHome = true, focusDate = false } = {}) {
+export function openSaleForm({ sale = null, day = null, returnHome = true, focusDate = false, prefill = null } = {}) {
   const editing = !!sale;
-  let neg = editing ? sale.profit < 0 : false;
+  let neg = editing ? sale.profit < 0 : !!prefill && prefill.profit < 0;
   let tag = editing ? sale.tag : null;
   let timeDirty = editing || !!day || focusDate;
   let modal;
@@ -41,7 +42,7 @@ export function openSaleForm({ sale = null, day = null, returnHome = true, focus
     placeholder: '0.000',
     'aria-label': 'Profit in TND',
     'aria-describedby': 'amount-err',
-    value: editing ? toInputValue(Math.abs(sale.profit)) : '',
+    value: editing ? toInputValue(Math.abs(sale.profit)) : prefill ? toInputValue(Math.abs(prefill.profit)) : '',
     oninput: () => {
       const typedMinus = amount.value.trim().startsWith('-') || amount.value.includes('−');
       if (typedMinus) setNeg(true);
@@ -115,7 +116,7 @@ export function openSaleForm({ sale = null, day = null, returnHome = true, focus
     maxlength: MAX_NOTE,
     placeholder: 'Note (optional), e.g. customer name',
     'aria-label': 'Note',
-    value: editing ? sale.note : '',
+    value: editing ? sale.note : prefill?.note ?? '',
     enterkeyhint: 'done',
     onkeydown: (e) => e.key === 'Enter' && (e.preventDefault(), submit(false)),
   });
@@ -139,7 +140,7 @@ export function openSaleForm({ sale = null, day = null, returnHome = true, focus
   }
   renderChips();
 
-  const hasExtras = editing && (sale.tag || sale.note);
+  const hasExtras = editing ? !!(sale.tag || sale.note) : !!prefill?.note;
   const extras = h('div.extras', { id: 'extras', hidden: !hasExtras }, chipsEl, note);
   const toggle = h('button.disclosure', {
     type: 'button',

@@ -2,7 +2,7 @@
    update only when the person taps "Update" (see js/ui/pwa.js).
    VERSION and the PRECACHE list are rewritten by `npm run stamp` — do not edit by hand. */
 
-const VERSION = 'b8542caf2c';
+const VERSION = '183550056b';
 const CACHE = `profitlog-${VERSION}`;
 /* PRECACHE:START */
 const PRECACHE = [
@@ -17,12 +17,14 @@ const PRECACHE = [
   './icons/icon-maskable.svg',
   './icons/icon.svg',
   './index.html',
+  './js/core/calc.js',
   './js/core/dates.js',
   './js/core/demo.js',
   './js/core/io.js',
   './js/core/money.js',
   './js/core/stats.js',
   './js/data/db.js',
+  './js/data/rates.js',
   './js/data/store.js',
   './js/main.js',
   './js/theme-boot.js',
@@ -38,6 +40,7 @@ const PRECACHE = [
   './js/ui/saleform.js',
   './js/ui/toast.js',
   './js/version.js',
+  './js/views/calc.js',
   './js/views/dashboard.js',
   './js/views/history.js',
   './js/views/home.js',

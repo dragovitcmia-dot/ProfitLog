@@ -1,7 +1,7 @@
 {
   "name": "profitlog",
   "version": "1.0.0",
-  "description": "Offline-first profit log PWA for TND sales. No backend, no build step.",
+  "description": "Offline-first profit log + card profit calculator PWA for TND sales. No backend, no build step.",
   "private": true,
   "type": "module",
   "scripts": {

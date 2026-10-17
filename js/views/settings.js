@@ -325,6 +325,6 @@ function aboutCard() {
   return card(
     'About',
     h('p.muted.small', `ProfitLog v${VERSION} · amounts in TND (stored as whole millimes) · dates and times in Africa/Tunis.`),
-    h('p.muted.small', 'No account, no tracking, no server. Works fully offline.'),
+    h('p.muted.small', 'No account, no tracking, no server. Works fully offline; only “Pull live” in Calc contacts a public EUR/USD rate service.'),
   );
 }

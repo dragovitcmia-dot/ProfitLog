@@ -6,6 +6,7 @@ import { openStorage } from './db.js';
 import { DEFAULT_TAGS, validateSale, newId } from '../core/io.js';
 import { generateDemo } from '../core/demo.js';
 import { byNewest } from '../core/stats.js';
+import { DEFAULT_CALC, cleanCalc } from '../core/calc.js';
 
 export function defaultSettings(now = Date.now()) {
   return {
@@ -15,6 +16,7 @@ export function defaultSettings(now = Date.now()) {
     lastExportAt: null,
     firstRunAt: now,
     backupSnoozedUntil: 0,
+    calc: { ...DEFAULT_CALC }, // calculator rates (USDT price, credit price, EUR/USD)
   };
 }
 
@@ -35,6 +37,7 @@ class Store {
     const { sales, settings } = await this.adapter.loadAll();
     this.sales = (sales || []).filter((s) => validateSale(s).ok).sort(byNewest);
     this.settings = { ...defaultSettings(), ...(settings || {}) };
+    this.settings.calc = cleanCalc(this.settings.calc);
     if (!settings) this.persist(() => this.adapter.saveSettings(this.settings)); // remember first run
   }
 
@@ -122,7 +125,7 @@ class Store {
     return removed;
   }
 
-  /** Wipes sales AND settings (tags, theme, week start, backup history). */
+  /** Wipes sales AND settings (tags, theme, week start, calculator rates, backup history). */
   async deleteEverything() {
     this.sales = [];
     this.settings = defaultSettings();
@@ -177,6 +180,7 @@ class Store {
     if (plan.mode === 'replace' && incomingSettings) {
       if (incomingSettings.weekStart !== undefined) settingsPatch.weekStart = incomingSettings.weekStart;
       if (incomingSettings.theme) settingsPatch.theme = incomingSettings.theme;
+      if (incomingSettings.calc) settingsPatch.calc = incomingSettings.calc;
     }
     this.insert(plan.add);
     this.saveSettings(settingsPatch);
@@ -184,11 +188,12 @@ class Store {
 
   // ---- settings ----
 
-  saveSettings(patch) {
+  /** `silent` saves without re-rendering (for fields the person is typing into right now). */
+  saveSettings(patch, { silent = false } = {}) {
     this.settings = { ...this.settings, ...patch };
     const snapshot = this.settings;
     this.persist(() => this.adapter.saveSettings(snapshot));
-    this.emit();
+    if (!silent) this.emit();
   }
 
   markExported() {

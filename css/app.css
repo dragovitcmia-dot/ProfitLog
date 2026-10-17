@@ -90,7 +90,7 @@ ul { margin: 0; padding-left: 20px; }
 /* ---------- tab bar + FAB ---------- */
 .tabbar {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: min(100%, 640px); z-index: 30;
-  display: grid; grid-template-columns: repeat(4, 1fr);
+  display: grid; grid-template-columns: repeat(5, 1fr);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--surface); border-top: 1px solid var(--line);
 }
@@ -396,3 +396,32 @@ ul { margin: 0; padding-left: 20px; }
   .modal-sheet { align-items: center; }
   .sheet { border-radius: 28px; max-height: 88dvh; }
 }
+
+/* ---------- calculator ---------- */
+.calc-inputs .field { margin-top: 0; }
+.calc-inputs .input, .calc-rates .input { font-variant-numeric: tabular-nums; }
+.input[aria-invalid="true"] { border-color: var(--neg); }
+.input[aria-invalid="true"]:focus { box-shadow: 0 0 0 4px var(--neg-soft); }
+.calc-result { display: flex; flex-direction: column; gap: 14px; }
+.calc-result .section-title { margin-top: 2px; }
+.calc-hint { color: var(--text-2); }
+.calc-msg { padding: 12px 14px; border-radius: var(--r-md); background: var(--warn-soft); color: var(--warn); }
+.calc-msg.is-error { background: var(--neg-soft); color: var(--neg); }
+.calc-msg-title { font-weight: 750; }
+.calc-msg ul { margin: 6px 0 0 18px; }
+.calc-profit { display: flex; flex-direction: column; gap: 2px; }
+.calc-chain { color: var(--text-2); font-size: 14.5px; }
+.calc-chain .step { white-space: nowrap; }
+.calc-rows { display: flex; flex-direction: column; margin: 0; }
+.calc-rows > div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.calc-rows dt { color: var(--text-2); }
+.calc-rows dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.calc-suggest { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.calc-suggest li { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.calc-suggest .pct { font-weight: 750; color: var(--brand); }
+.calc-suggest .price { font-weight: 750; }
+.calc-suggest .gain { margin-left: 10px; color: var(--pos); font-weight: 650; }
+.rate-group.is-unused .field, .rate-group.is-unused .rate-actions { opacity: 0.5; }
+.rate-actions { margin-top: 10px; }
+.rate-group .field-hint { margin-top: 6px; }
+.calc-summary { margin-top: 4px; }
